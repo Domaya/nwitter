@@ -16,12 +16,16 @@ const Home = ({userObj}) => {
   };
   useEffect(() => {
     getNweets();
+    dbService.collection("nweets").onSnapshot(snapshot => {
+      console.log("Something happened");
+    });
   }, []);
   const onSubmit = async (event) => {
     event.preventDefault();
     await dbService.collection("nweets").add({
       text:nweet, //nweet는 state인 nweet의 value
       createdAt: Date.now(),
+      creatorId : userObj.uid
     });
     setNweet("");
   };
@@ -47,7 +51,7 @@ const Home = ({userObj}) => {
       <div>
         {nweets.map((nweet) => (
           <div key={nweet.id}>
-            <h4>{nweet.nweet}</h4>
+            <h4>{nweet.text}</h4>
           </div>
         ))}
       </div>
