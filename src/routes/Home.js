@@ -16,9 +16,13 @@ const Home = ({userObj}) => {
   };
   useEffect(() => {
     getNweets();
-    dbService.collection("nweets").onSnapshot(snapshot => {
-      console.log("Something happened");
-    });
+    dbService.collection("nweets").onSnapshot((snapshot) => {
+      const nweetArray = snapshot.docs.map((doc) => ({
+        id:doc.id,
+        ...doc.data()
+      }))
+     setNweets(nweetArray);
+    })
   }, []);
   const onSubmit = async (event) => {
     event.preventDefault();
