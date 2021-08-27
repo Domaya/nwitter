@@ -43,6 +43,7 @@ const Nweet = ({nweetObj, isOwner}) => {
         <>
         <div>
           <h4>{nweetObj.text}</h4>
+          {nweetObj.attachmentURL && <img src={nweetObj.attachmentURL} width="100px" heigh="auto" />}
           {
             isOwner &&(
             <>
