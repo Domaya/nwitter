@@ -30,7 +30,7 @@ const Home = ({userObj}) => {
   const onSubmit = async (event) => {
     event.preventDefault();
     let attachmentURL = "";
-    if(attachment != ""){
+    if(attachment !== ""){
       const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);//참조
       const response = await attachmentRef.putString(attachment, 'data_url').then(function(snapshot){
         console.log("Uploaded a data_url string!");
