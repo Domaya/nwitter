@@ -32,7 +32,7 @@ function App() {
     <>
       {init ? <AppRouter 
       refreshUser={refreshUser}
-      isLoggedIn={isLoggedIn} 
+      isLoggedIn={Boolean(userObj)}
       userObj={userObj} />: "Initializing..."}
       <footer>&copy; {new Date().getFullYear()} Dowitter </footer>
     </>); //props전달
