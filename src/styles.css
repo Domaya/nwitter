@@ -274,3 +274,15 @@ form {
   font-size: 12px;
   text-decoration: underline;
 }
+
+#nweet_author {
+  font-weight: bold;
+}
+#nweet_date {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+footer{
+  margin-bottom: 20px;
+}
