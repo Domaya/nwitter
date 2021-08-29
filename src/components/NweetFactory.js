@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { storageService, dbService } from "fbase";
+import { storageService, dbService, authService } from "fbase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
@@ -52,6 +52,14 @@ const NweetFactory = ({ userObj }) => {
     reader.readAsDataURL(theFile);
   };
   const onClearAttachment = () => setAttachment("");
+  useEffect(()=>{
+    if(userObj.displayName === null){
+      userObj.updateProfile({
+        displayName: "이름이 없습니다"
+      })
+    }
+    console.log(userObj)    
+  }, [])
   return (
     <form onSubmit={onSubmit} className="factoryForm">
       <div className="factoryInput__container">
