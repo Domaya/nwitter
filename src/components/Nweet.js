@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { dbService, storageService } from "fbase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 
 const Nweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -49,6 +50,8 @@ const Nweet = ({ nweetObj, isOwner }) => {
         </>
       ) : (
         <>
+          <h2 id="nweet_author">{nweetObj.author}</h2>
+          <h2 id="nweet_date">{moment(nweetObj.createdAt).format('YYYY/MM/D h:mm a')}</h2>
           <h4>{nweetObj.text}</h4>
           {nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} />}
           {isOwner && (
