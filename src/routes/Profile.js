@@ -20,7 +20,6 @@ export default ( {userObj, refreshUser} ) => {
   }
   useEffect(() => {
     getMyNweets();
-    console.log(userObj);
   }, [])
 
   const onChange = (event) => {
