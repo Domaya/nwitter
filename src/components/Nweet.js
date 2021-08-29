@@ -1,62 +1,70 @@
-import { dbService, storageService } from "fbase";
 import React, { useState } from "react";
+import { dbService, storageService } from "fbase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
-const Nweet = ({nweetObj, isOwner}) => {
+const Nweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
   const [newNweet, setNewNweet] = useState(nweetObj.text);
-  const onDeleteClick = async() => {
-    const ok = window.confirm("Are you sure?");
-    if(ok){
-      //delete nweet
+  const onDeleteClick = async () => {
+    const ok = window.confirm("Are you sure you want to delete this nweet?");
+    if (ok) {
       await dbService.doc(`nweets/${nweetObj.id}`).delete();
-      await storageService.refFromURL(nweetObj.attachmentURL).delete()
+      await storageService.refFromURL(nweetObj.attachmentUrl).delete();
     }
-  }
+  };
   const toggleEditing = () => setEditing((prev) => !prev);
-  const onSubmit = async(event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     await dbService.doc(`nweets/${nweetObj.id}`).update({
-      text:newNweet
-    })
+      text: newNweet,
+    });
     setEditing(false);
-  }
-  const onChange = (event) =>{
-    const { target:{value} } = event;
+  };
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
     setNewNweet(value);
-  }
-
+  };
   return (
-    <div>
+    <div className="nweet">
       {editing ? (
         <>
-        <form onSubmit={onSubmit}>
-          <input type="text"
-          placeholder="Edit your nweet"
-          value={newNweet}
-          onChange={onChange}
-          required/>
-          <input type="submit" value="newNweet"></input>
-        </form>
-        <button onClick={toggleEditing}>cancel</button>
+          <form onSubmit={onSubmit} className="container nweetEdit">
+            <input
+              type="text"
+              placeholder="Edit your nweet"
+              value={newNweet}
+              required
+              autoFocus
+              onChange={onChange}
+              className="formInput"
+            />
+            <input type="submit" value="Update Nweet" className="formBtn" />
+          </form>
+          <span onClick={toggleEditing} className="formBtn cancelBtn">
+            Cancel
+          </span>
         </>
-        )
-        :
+      ) : (
         <>
-        <div>
           <h4>{nweetObj.text}</h4>
-          {nweetObj.attachmentURL && <img src={nweetObj.attachmentURL} width="100px" heigh="auto" />}
-          {
-            isOwner &&(
-            <>
-              <button onClick={onDeleteClick}>Delete Nweet</button>
-              <button onClick={toggleEditing}>Edit Nweet</button>
-            </>)
-          }
-      </div>
+          {nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} />}
+          {isOwner && (
+            <div className="nweet__actions">
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
+            </div>
+          )}
         </>
-      }
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Nweet
+export default Nweet;
