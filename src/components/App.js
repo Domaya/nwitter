@@ -36,7 +36,7 @@ function App() {
       refreshUser={refreshUser}
       isLoggedIn={Boolean(userObj)}
       userObj={userObj} />: "Initializing..."}
-      <footer>&copy; {new Date().getFullYear()} Dowitter </footer>
+      <center><footer>&copy; {new Date().getFullYear()} Dowitter </footer></center>
     </>); //props전달
 }
 
